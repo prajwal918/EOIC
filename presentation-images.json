@@ -1,0 +1,202 @@
+{
+  "presentation_title": "Traditional Knowledge in Humanity and Sciences",
+  "total_images": 19,
+  "images": [
+    {
+      "id": 1,
+      "filename": "1745155303642.jpeg",
+      "used_in": ["Title Slide (Slide 1)", "What is Traditional Knowledge (Slide 2)"],
+      "description": "Main background image",
+      "size": "122487 bytes"
+    },
+    {
+      "id": 2,
+      "filename": "imageres.jpeg",
+      "used_in": ["Scope and Significance (Slide 3)", "Quiz 1"],
+      "description": "Plant in test tube - Agricultural knowledge",
+      "size": "11266 bytes"
+    },
+    {
+      "id": 3,
+      "filename": "ancient scrolls.jpg",
+      "used_in": ["What is Traditional Knowledge (Slide 2)"],
+      "description": "Ancient texts and scrolls",
+      "size": "39475 bytes"
+    },
+    {
+      "id": 4,
+      "filename": "images.jpeg",
+      "used_in": ["Case Study: Turmeric (Slide 4)", "Quiz 2"],
+      "description": "Traditional herbs and medicine",
+      "size": "15365 bytes"
+    },
+    {
+      "id": 5,
+      "filename": "natureforest background.jpeg",
+      "used_in": ["Traditional Ecological Knowledge (Slide 5)"],
+      "description": "Forest and nature background",
+      "size": "7425 bytes"
+    },
+    {
+      "id": 6,
+      "filename": "ndigenous person observing their natural environment..jpg",
+      "used_in": ["Quiz 3"],
+      "description": "Indigenous person observing nature",
+      "size": "2640173 bytes"
+    },
+    {
+      "id": 7,
+      "filename": "starry-night-sky-constellations-over-tranquil-lake-forest-landscape-ai-generated-363776909.webp",
+      "used_in": ["Case Study: Indigenous Astronomy (Slide 6)", "Quiz 4"],
+      "description": "Starry night sky with constellations",
+      "size": "18258 bytes"
+    },
+    {
+      "id": 8,
+      "filename": "Double-hhdelix_hero.png",
+      "used_in": ["Challenges & Ethical Considerations (Slide 7)"],
+      "description": "DNA helix background",
+      "size": "177725 bytes"
+    },
+    {
+      "id": 9,
+      "filename": "picture of a medicinal plant with a copyright symbol (©) over it to better represent the theme of intellectual property theft..jpg",
+      "used_in": ["Quiz 5"],
+      "description": "Medicinal plant with copyright symbol - Biopiracy theme",
+      "size": "217296 bytes"
+    },
+    {
+      "id": 10,
+      "filename": "hows a contrast, like a traditional elder standing in front of a modern university or government building..jpeg",
+      "used_in": ["Quiz 6"],
+      "description": "Traditional elder with modern institution",
+      "size": "8270 bytes"
+    },
+    {
+      "id": 11,
+      "filename": "newly-planted-trees-row-nature-1bfbfbfb16741868.webp",
+      "used_in": ["Success Story: Afforestation (Slide 8)", "Quiz 7"],
+      "description": "Tree planting and conservation",
+      "size": "126228 bytes"
+    },
+    {
+      "id": 12,
+      "filename": "scientific-laborajltory-equipment.jpg",
+      "used_in": ["Future Directions (Slide 9)"],
+      "description": "Laboratory equipment",
+      "size": "202801 bytes"
+    },
+    {
+      "id": 13,
+      "filename": "two people from different cultures (e.g., a scientist and a tribal elder) sitting and talking together..jpeg",
+      "used_in": ["Quiz 8"],
+      "description": "Intercultural dialogue - Scientist and tribal elder",
+      "size": "7617 bytes"
+    },
+    {
+      "id": 14,
+      "filename": "lightbulb containing a leaf or a traditional symbol, representing new ideas from nature and culture.jpeg",
+      "used_in": ["Quiz 9"],
+      "description": "Lightbulb with leaf - Innovation symbol",
+      "size": "954336 bytes"
+    },
+    {
+      "id": 15,
+      "filename": "I suggest an image showing a DNA helix intertwined with a plant vine, symbolizing the integration of modern science and traditional knowledge.jpeg",
+      "used_in": ["Quiz 10"],
+      "description": "DNA helix with plant vine - Integration of science and TK",
+      "size": "37875 bytes"
+    },
+    {
+      "id": 16,
+      "filename": "stack-books-stationery-background-school-board_147376-4875.jpg",
+      "used_in": ["Not currently used"],
+      "description": "Books and stationery background",
+      "size": "33114 bytes"
+    },
+    {
+      "id": 17,
+      "filename": "Research_Lab_glassware_equipment_0d93c629-193d-yty4154-a1b9-c4f21a883f01-441028.webp",
+      "used_in": ["Not currently used"],
+      "description": "Research lab glassware",
+      "size": "38618 bytes"
+    },
+    {
+      "id": 18,
+      "filename": "traditional-textile-patterns-stockcake.jpg",
+      "used_in": ["Not currently used"],
+      "description": "Traditional textile patterns",
+      "size": "102276 bytes"
+    }
+  ],
+  "quiz_backgrounds": {
+    "quiz_1": {
+      "image": "imageres.jpeg",
+      "gradient": "purple-pink-orange",
+      "theme": "Significance of Traditional Knowledge"
+    },
+    "quiz_2": {
+      "image": "images.jpeg",
+      "gradient": "amber-yellow-orange",
+      "theme": "Turmeric and Curcumin"
+    },
+    "quiz_3": {
+      "image": "ndigenous person observing their natural environment..jpg",
+      "gradient": "emerald-teal-green",
+      "theme": "Traditional Ecological Knowledge"
+    },
+    "quiz_4": {
+      "image": "starry-night-sky-constellations-over-tranquil-lake-forest-landscape-ai-generated-363776909.webp",
+      "gradient": "indigo-blue-purple",
+      "theme": "Celestial Navigation"
+    },
+    "quiz_5": {
+      "image": "picture of a medicinal plant with a copyright symbol (©) over it to better represent the theme of intellectual property theft..jpg",
+      "gradient": "rose-red-pink",
+      "theme": "Biopiracy"
+    },
+    "quiz_6": {
+      "image": "hows a contrast, like a traditional elder standing in front of a modern university or government building..jpeg",
+      "gradient": "slate-gray-zinc",
+      "theme": "Mainstream Institutions"
+    },
+    "quiz_7": {
+      "image": "newly-planted-trees-row-nature-1bfbfbfb16741868.webp",
+      "gradient": "lime-green-emerald",
+      "theme": "Afforestation Initiative"
+    },
+    "quiz_8": {
+      "image": "two people from different cultures (e.g., a scientist and a tribal elder) sitting and talking together..jpeg",
+      "gradient": "cyan-blue-teal",
+      "theme": "Fostering Dialogue"
+    },
+    "quiz_9": {
+      "image": "lightbulb containing a leaf or a traditional symbol, representing new ideas from nature and culture.jpeg",
+      "gradient": "fuchsia-violet-purple",
+      "theme": "Innovation and TK"
+    },
+    "quiz_10": {
+      "image": "I suggest an image showing a DNA helix intertwined with a plant vine, symbolizing the integration of modern science and traditional knowledge.jpeg",
+      "gradient": "sky-indigo-blue",
+      "theme": "Integration of Science and TK"
+    }
+  },
+  "color_gradients": [
+    "from-purple-900/70 via-pink-900/60 to-orange-900/70",
+    "from-amber-900/70 via-yellow-900/60 to-orange-800/70",
+    "from-emerald-900/70 via-teal-900/60 to-green-900/70",
+    "from-indigo-900/70 via-blue-900/60 to-purple-900/70",
+    "from-rose-900/70 via-red-900/60 to-pink-900/70",
+    "from-slate-900/70 via-gray-900/60 to-zinc-900/70",
+    "from-lime-900/70 via-green-900/60 to-emerald-900/70",
+    "from-cyan-900/70 via-blue-900/60 to-teal-900/70",
+    "from-fuchsia-900/70 via-violet-900/60 to-purple-900/70",
+    "from-sky-900/70 via-indigo-900/60 to-blue-900/70"
+  ],
+  "metadata": {
+    "total_slides": 21,
+    "total_quizzes": 10,
+    "created_date": "2025-10-11",
+    "format": "HTML Presentation"
+  }
+}

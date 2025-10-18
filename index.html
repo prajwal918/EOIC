@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentation: Traditional Knowledge in Humanity and Sciences</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        .font-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* Palette */
+        .bg-cream { background-color: #F8F5F0; }
+        .text-dark-brown { color: #4B4237; }
+        .bg-deep-green { background-color: #344E41; }
+        .text-deep-green { color: #344E41; }
+        .bg-accent-rust { background-color: #A26746; }
+        .text-accent-rust { color: #A26746; }
+        .border-accent-rust { border-color: #A26746; }
+        .bg-muted-teal { background-color: #588157; }
+        
+        /* Removed progress bar for cleaner look */
+        
+        /* Floating decorative elements */
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(10px) rotate(-5deg); }
+            75% { transform: translateY(-10px) rotate(3deg); }
+        }
+
+        /* General Slide Styling with Transitions */
+        .slide {
+            width: 100%;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            box-sizing: border-box;
+            transition: opacity 0.7s ease-in-out;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            z-index: 10;
+        }
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Paper texture */
+        .paper-texture {
+            background-color: #F8F5F0;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4"%3E%3Cpath fill="%23D3C5B3" fill-opacity="0.1" d="M1 3h1v1H1V3zm2-2h1v1H3V1z"%3E%3C/path%3E%3C/svg%3E');
+        }
+
+        /* Subtle Pattern for dark backgrounds */
+        .dark-pattern {
+             background-image: linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.02) 75%, transparent 75%, transparent);
+             background-size: 30px 30px;
+        }
+
+        /* Gemini Modal Styling */
+        .gemini-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .gemini-modal {
+            background-color: #F8F5F0;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #A26746;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .text-shadow-strong {
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Button Styling */
+        .action-button {
+            background: linear-gradient(135deg, #A26746, #8B5A3C);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 800;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+        .action-button:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        }
+
+        /* Quiz Styling */
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.95);
+            border: 4px solid #A26746;
+            color: #2d1f14;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.5);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        .quiz-option:hover:not(:disabled) {
+            background: rgba(162, 103, 70, 0.3);
+            transform: translateX(10px) scale(1.02);
+            border-color: #8B5A3C;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .quiz-option.correct {
+            background: linear-gradient(135deg, #588157, #3E8E41);
+            border-color: #2F6F30;
+            color: white;
+            font-weight: 900;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .quiz-option.incorrect {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+            border-color: #dc2626;
+            color: white;
+            font-weight: 900;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .quiz-option:disabled {
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+        
+        /* Content Animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        [data-animate] {
+            opacity: 0;
+        }
+        .slide.active [data-animate] {
+            opacity: 1;
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.7s ease-out forwards;
+        }
+        .slide-in-left {
+            animation: slideInLeft 0.7s ease-out forwards;
+        }
+        .slide-in-right {
+            animation: slideInRight 0.7s ease-out forwards;
+        }
+        .zoom-in {
+            animation: zoomIn 0.7s ease-out forwards;
+        }
+        
+        /* Glow effect */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(162, 103, 70, 0.5);
+        }
+        
+        /* Navigation hints */
+        .nav-hint {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: white;
+            opacity: 0.5;
+            font-size: 14px;
+            z-index: 50;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Parallax effect for images */
+        .parallax-img {
+            transition: transform 0.5s ease;
+        }
+        .parallax-img:hover {
+            transform: scale(1.05) translateZ(50px);
+        }
+        
+        /* Decorative icons */
+        .icon-decoration {
+            position: absolute;
+            opacity: 0.2;
+            animation: pulse 3s infinite;
+        }
+
+        /* Thread game styles */
+
+    </style>
+</head>
+<body>
+    <!-- Progress bar removed for cleaner interface -->
+    
+    <!-- Navigation Hint -->
+    <div class="nav-hint">
+        <span>Use ← → or click to navigate</span>
+    </div>
+    
+    <!-- Floating Decorative Elements -->
+    <div class="floating-element" style="top: 10%; left: 5%; font-size: 100px; color: #A26746;">☉</div>
+    <div class="floating-element" style="top: 60%; right: 10%; font-size: 80px; color: #588157; animation-delay: 5s;">❋</div>
+    <div class="floating-element" style="bottom: 20%; left: 15%; font-size: 60px; color: #344E41; animation-delay: 10s;">✧</div>
+
+    <div id="slide-1" class="slide active">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('1745155303642.jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80"></div>
+            <div class="relative w-full h-full flex flex-col justify-center items-center p-12 text-white text-shadow-strong text-center">
+                <div class="icon-decoration top-10 left-10 text-6xl">🌿</div>
+                <div class="icon-decoration top-10 right-10 text-6xl" style="animation-delay: 1s;">🔬</div>
+                <div class="icon-decoration bottom-10 left-10 text-6xl" style="animation-delay: 2s;">📚</div>
+                <div class="icon-decoration bottom-10 right-10 text-6xl" style="animation-delay: 3s;">🌍</div>
+                <h1 data-animate class="font-title text-7xl md:text-9xl text-white" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.9), 0 0 30px rgba(255,255,255,0.3);">Traditional Knowledge</h1>
+                <p data-animate class="text-3xl md:text-4xl mt-4 text-yellow-300" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.9);">in Humanity and Sciences</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="slide-2" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('1745155303642.jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/85 to-black/75 backdrop-blur-sm"></div>
+            <div class="relative w-full p-16 flex items-center">
+                <div class="w-3/5 text-white text-shadow-strong">
+                    <h2 data-animate data-animation="slide-in-left" class="font-title text-6xl text-yellow-300 mb-6" style="text-shadow: 2px 2px 6px rgba(0,0,0,0.9);">What is Traditional Knowledge?</h2>
+                    <p data-animate data-animation="fade-in-up" class="text-2xl leading-relaxed text-white" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">The collective wisdom passed down through generations within communities, rooted in cultural practices, beliefs, and oral traditions.</p>
+                    <div data-animate data-animation="fade-in-up" class="mt-6 grid grid-cols-2 gap-4">
+                        <div class="bg-black/50 backdrop-blur p-4 rounded-lg border border-yellow-300/50">
+                            <span class="text-3xl">🎨</span>
+                            <p class="mt-2 font-bold text-yellow-300">Humanities</p>
+                            <p class="text-sm text-white">Art, customs, languages</p>
+                        </div>
+                        <div class="bg-black/50 backdrop-blur p-4 rounded-lg border border-yellow-300/50">
+                            <span class="text-3xl">🌱</span>
+                            <p class="mt-2 font-bold text-yellow-300">Sciences</p>
+                            <p class="text-sm text-white">Medicine, agriculture, ecology</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-2/5 pl-12">
+                    <img data-animate data-animation="zoom-in" src="ancient scrolls.jpg" alt="Ancient traditional texts" class="rounded-lg shadow-2xl parallax-img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="slide-3" class="slide">
+        <div class="slide-container paper-texture text-dark-brown p-16">
+            <div class="w-full flex flex-col">
+                <h2 data-animate class="font-title text-5xl text-center mb-10">Scope and <span class="text-accent-rust">Significance</span></h2>
+                <div class="flex-grow w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div data-animate class="space-y-6 text-xl">
+                        <p><strong>Cultural Preservation:</strong> Safeguards heritage, languages, and traditions, forging a link between past and future.</p>
+                        <p><strong>Scientific Contributions:</strong> Enriches modern fields like pharmacology, agronomy, and ecology.</p>
+                        <p><strong>Sustainable Management:</strong> Promotes eco-friendly practices and deep-rooted conservation ethics.</p>
+                        <p><strong>Holistic Development:</strong> Integrates science, culture, and ecology for a more balanced approach to progress.</p>
+                    </div>
+                    <div data-animate data-animation="slide-in-right" class="p-4">
+                         <img src="imageres.jpeg" alt="Agricultural knowledge and sustainability" class="w-full object-cover rounded-lg shadow-2xl transform rotate-2 parallax-img hover:rotate-0 transition-transform duration-500">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div id="slide-4" class="slide">
+        <div class="slide-container bg-white text-dark-brown p-16 flex items-center">
+             <div data-animate data-animation="slide-in-left" class="w-1/2 p-4 relative">
+                 <img src="images.jpeg" alt="Traditional herbs and medicine" class="w-full object-cover shadow-2xl rounded-lg parallax-img">
+                 <div class="absolute -top-4 -right-4 bg-accent-rust text-white rounded-full w-20 h-20 flex items-center justify-center font-bold text-lg animate-pulse">Ancient</div>
+             </div>
+            <div data-animate class="w-1/2 space-y-6 pl-12">
+                 <h2 class="font-title text-4xl">Case Study: <span class="text-accent-rust">Turmeric</span></h2>
+                 <h3 class="text-2xl font-bold border-b-2 border-accent-rust pb-3">From Ancient Remedy to Modern Marvel</h3>
+                 <ul class="list-disc list-inside text-xl space-y-3">
+                    <li><strong>Traditional Heritage:</strong> A cornerstone of Ayurveda for inflammation, digestion, and healing.</li>
+                    <li><strong>Scientific Validation:</strong> Curcumin is identified as the key active compound with potent therapeutic effects.</li>
+                    <li><strong>Modern Applications:</strong> Crucial in developing treatments for arthritis, cancer, and neurodegenerative disorders.</li>
+                 </ul>
+                 <button id="factBtn" class="action-button mt-4">✨ Discover a Fact</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div id="slide-5" class="slide">
+        <div class="slide-container bg-cover bg-center text-white" style="background-image: url('natureforest background.jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/70 to-black/60"></div>
+            <div class="relative w-full p-16 flex flex-col justify-center">
+                <h2 data-animate class="font-title text-6xl text-center mb-10" style="color: #FFD700; text-shadow: 3px 3px 8px rgba(0,0,0,0.9);">Integrating <span class="text-yellow-300">Traditional Ecological Knowledge</span></h2>
+                <div class="w-full grid grid-cols-2 gap-10">
+                    <div data-animate class="bg-black/60 backdrop-blur-md p-8 rounded-lg border border-yellow-300/50">
+                        <h3 class="font-title text-3xl mb-4 text-yellow-300">What is TEK?</h3>
+                        <p class="text-xl text-white" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">The intimate knowledge of a place passed down through generations in local and indigenous communities, built on direct experience, observation, and stories from elders.</p>
+                    </div>
+                    <div data-animate class="bg-black/60 backdrop-blur-md p-8 rounded-lg border border-yellow-300/50">
+                        <h3 class="font-title text-3xl mb-4 text-yellow-300">Why is it Vital?</h3>
+                         <ul class="space-y-3 text-xl text-white" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+                            <li><span class="font-bold text-yellow-300">Local Insight:</span> Provides a deep, nuanced understanding of environmental changes.</li>
+                            <li><span class="font-bold text-yellow-300">Conservation Practices:</span> Includes methods like seasonal hunting and sacred groves that preserve biodiversity.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div id="slide-6" class="slide">
+        <div class="slide-container paper-texture text-dark-brown p-16 flex items-center">
+            <div data-animate class="w-1/2 space-y-6 pr-12">
+                 <h2 class="font-title text-4xl">Case Study: <span class="text-accent-rust">Indigenous Astronomy</span></h2>
+                 <h3 class="text-2xl font-bold border-b-2 border-accent-rust pb-3">Ancient Wisdom, Modern Astrophysics</h3>
+                 <ul class="list-disc list-inside text-xl space-y-3">
+                    <li><strong>Celestial Navigation:</strong> Enabled cultures like Polynesian navigators to cross vast oceans without modern GPS.</li>
+                    <li><strong>Historical Records:</strong> Oral traditions accurately documented eclipses, comets, and planetary alignments.</li>
+                    <li><strong>Modern Contributions:</strong> This knowledge helps validate and enrich long-term astronomical datasets.</li>
+                 </ul>
+            </div>
+            <div data-animate data-animation="zoom-in" class="w-1/2 p-4 relative">
+                 <div class="border-2 border-dashed border-gray-400 rounded-lg p-4 bg-white/5">
+                     <img src="starry-night-sky-constellations-over-tranquil-lake-forest-landscape-ai-generated-363776909.webp" alt="Celestial navigation and stars" class="w-full object-cover shadow-xl transform rotate-2 rounded-md parallax-img hover:rotate-0 transition-transform duration-500">
+                     <div class="absolute top-2 right-2 text-4xl opacity-60">✨</div>
+                     <p class="text-center italic text-md mt-4">Indigenous knowledge provides unique, long-term datasets for modern science.</p>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div id="slide-7" class="slide">
+        <div class="slide-container bg-cover bg-center text-white" style="background-image: url('Double-hhdelix_hero.png');">
+            <div class="absolute inset-0 bg-gradient-to-br from-black/70 via-purple-900/30 to-black/70"></div>
+            <div class="relative w-full p-16 flex flex-col justify-center text-shadow-strong">
+                <h2 data-animate class="font-title text-6xl text-center mb-10 text-yellow-300" style="text-shadow: 3px 3px 8px rgba(0,0,0,0.9);">Challenges & Ethical Considerations</h2>
+                <div class="grid grid-cols-2 gap-10">
+                    <div data-animate class="bg-black/60 backdrop-blur-md p-8 rounded-lg border border-yellow-300/50">
+                        <h3 class="font-title text-3xl text-yellow-300 mb-4">Key Challenges</h3>
+                        <ul class="space-y-4 text-xl text-white" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+                            <li><strong class="text-yellow-300">Misrepresentation:</strong> Knowledge can be oversimplified or its cultural context lost in translation.</li>
+                            <li><strong class="text-yellow-300">Intellectual Property:</strong> Protecting communal, oral knowledge from biopiracy and exploitation is difficult.</li>
+                        </ul>
+                    </div>
+                    <div data-animate class="bg-black/60 backdrop-blur-md p-8 rounded-lg border border-yellow-300/50">
+                        <h3 class="font-title text-3xl mb-4 text-yellow-300">Protecting TK Rights</h3>
+                         <ul class="space-y-4 text-xl text-white" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.8);">
+                            <li><strong class="text-yellow-300">Consent and Credit:</strong> Ensuring proper permission and recognition for knowledge holders is paramount.</li>
+                            <li><strong class="text-yellow-300">Benefit-Sharing:</strong> Communities must receive a fair share of benefits from any commercial use.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="slide-8" class="slide">
+        <div class="slide-container paper-texture text-dark-brown">
+            <div data-animate class="w-3/5 p-16 flex flex-col justify-center">
+                <h2 class="font-title text-5xl text-accent-rust mb-6">Success Story</h2>
+                <h3 class="font-title text-3xl mb-4">Conservation: Kalyana Karnataka Afforestation</h3>
+                <p class="text-xl leading-relaxed">In this region of India, a partnership between the Forest Department and local communities is reviving the landscape by planting one lakh native tree saplings. This initiative combats soil erosion, improves groundwater levels, and fosters biodiversity, demonstrating a powerful synergy between government action and Traditional Ecological Knowledge.</p>
+            </div>
+            <div class="w-2/5 flex items-center justify-center p-8 bg-gradient-to-br from-green-100 to-green-200 relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=%2240%22 height=%2240%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg%3E%3Cpath fill=%22%23588157%22 d=%22M0 20L20 0L40 20L20 40z%22/%3E%3C/g%3E%3C/svg%3E'); background-size: 40px 40px;"></div>
+                <img data-animate data-animation="zoom-in" src="newly-planted-trees-row-nature-1bfbfbfb16741868.webp" alt="Tree planting and conservation" class="h-full w-full object-cover shadow-2xl rounded-lg transform -rotate-3 parallax-img hover:rotate-0 transition-transform duration-500 relative z-10">
+            </div>
+        </div>
+    </div>
+
+    
+
+    <!-- Consolidated quizzes start -->
+    <div id="quiz-1" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('imageres.jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-900/70 via-pink-900/60 to-orange-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,182,193,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-1"></p>
+                <div data-animate id="quiz-options-1" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-1" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-2" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('images.jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-br from-amber-900/70 via-yellow-900/60 to-orange-800/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,215,0,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-2"></p>
+                <div data-animate id="quiz-options-2" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-2" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-3" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('ndigenous person observing their natural environment..jpg');">
+            <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/70 via-teal-900/60 to-green-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(64,224,208,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-3"></p>
+                <div data-animate id="quiz-options-3" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-3" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-4" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('starry-night-sky-constellations-over-tranquil-lake-forest-landscape-ai-generated-363776909.webp');">
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/70 via-blue-900/60 to-purple-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(138,43,226,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-4"></p>
+                <div data-animate id="quiz-options-4" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-4" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-5" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('picture of a medicinal plant with a copyright symbol (©) over it to better represent the theme of intellectual property theft..jpg');">
+            <div class="absolute inset-0 bg-gradient-to-br from-rose-900/70 via-red-900/60 to-pink-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,20,147,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-5"></p>
+                <div data-animate id="quiz-options-5" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-5" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-6" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('hows a contrast, like a traditional elder standing in front of a modern university or government building..jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-900/70 via-gray-900/60 to-zinc-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(192,192,192,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-6"></p>
+                <div data-animate id="quiz-options-6" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-6" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-7" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('newly-planted-trees-row-nature-1bfbfbfb16741868.webp');">
+            <div class="absolute inset-0 bg-gradient-to-br from-lime-900/70 via-green-900/60 to-emerald-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(50,205,50,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-7"></p>
+                <div data-animate id="quiz-options-7" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-7" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-8" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('two people from different cultures (e.g., a scientist and a tribal elder) sitting and talking together..jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/70 via-blue-900/60 to-teal-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(0,255,255,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-8"></p>
+                <div data-animate id="quiz-options-8" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-8" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-9" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('lightbulb containing a leaf or a traditional symbol, representing new ideas from nature and culture.jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-br from-fuchsia-900/70 via-violet-900/60 to-purple-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,0,255,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-9"></p>
+                <div data-animate id="quiz-options-9" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-9" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-10" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('I suggest an image showing a DNA helix intertwined with a plant vine, symbolizing the integration of modern science and traditional knowledge.jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-br from-sky-900/70 via-indigo-900/60 to-blue-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(135,206,250,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-10"></p>
+                <div data-animate id="quiz-options-10" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-10" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="quiz-11" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('1745155303642.jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-br from-orange-900/70 via-amber-900/60 to-yellow-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,165,0,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-11"></p>
+                <div data-animate id="quiz-options-11" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-11" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="quiz-12" class="slide">
+        <div class="slide-container bg-cover bg-center" style="background-image: url('imageres.jpeg');">
+            <div class="absolute inset-0 bg-gradient-to-br from-green-900/70 via-teal-900/60 to-cyan-900/70 backdrop-blur-md"></div>
+            <div class="relative w-full p-16 flex-col justify-center items-center text-white">
+                <h2 data-animate class="font-title text-5xl text-center mb-4 text-glow" style="text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(0,255,127,0.6);">Knowledge Check!</h2>
+                <p data-animate class="text-2xl text-center mb-10 font-semibold" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);" id="quiz-question-12"></p>
+                <div data-animate id="quiz-options-12" class="w-full max-w-3xl grid grid-cols-1 gap-5">
+                </div>
+                <div id="quiz-feedback-12" class="mt-8 text-2xl font-bold h-8"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Consolidated quizzes end -->
+    
+    <div id="slide-12" class="slide">
+        <div class="slide-container paper-texture text-dark-brown flex flex-col justify-center items-center p-16 relative overflow-hidden">
+            <div class="absolute inset-0 opacity-5" style="background-image: url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath d=%22M30 10 L50 30 L30 50 L10 30 Z%22 fill=%22%23A26746%22 opacity=%220.3%22/%3E%3C/svg%3E'); background-size: 60px 60px;"></div>
+            
+            <!-- Decorative corner badges -->
+            <div class="absolute top-10 left-10 w-16 h-16 bg-deep-green rounded-full flex items-center justify-center text-3xl shadow-lg border-4 border-accent-rust">🎯</div>
+            <div class="absolute top-10 right-10 w-16 h-16 bg-muted-teal/30 rounded-full flex items-center justify-center text-4xl">🎮</div>
+            <div class="absolute bottom-10 left-10 text-7xl opacity-20">🌿</div>
+            <div class="absolute top-1/3 left-10 w-12 h-12 bg-accent-rust rounded-full flex items-center justify-center text-2xl shadow-md">💊</div>
+            <div class="absolute top-1/3 right-10 w-12 h-12 bg-accent-rust rounded-full flex items-center justify-center text-2xl shadow-md">✿</div>
+            
+            <div class="relative z-10 max-w-4xl w-full">
+                <!-- Title -->
+                <h2 class="font-title text-7xl md:text-8xl text-center mb-10" style="color:#A26746; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">GAMES</h2>
+                
+                <!-- Main card -->
+                <div class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl border-4 border-accent-rust p-10 relative">
+                    <p class="font-title text-4xl md:text-5xl leading-relaxed text-dark-brown font-bold tracking-wide text-center">
+                        Insert the Thread<br>into the Needle
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="slide-13" class="slide">
+        <div class="slide-container paper-texture text-dark-brown flex-col justify-center items-center text-center p-12 relative overflow-hidden">
+            <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 50% 50%, #A26746 0%, transparent 70%);"></div>
+            <div class="absolute top-0 left-0 text-9xl opacity-10 text-accent-rust" style="transform: rotate(-15deg) translate(-20%, -20%);">🙏</div>
+            <div class="absolute bottom-0 right-0 text-9xl opacity-10 text-muted-teal" style="transform: rotate(15deg) translate(20%, 20%);">🌟</div>
+            <h2 data-animate data-animation="zoom-in" class="font-title text-7xl md:text-8xl text-glow relative z-10">Thank You</h2>
+        </div>
+    </div>
+    
+    
+    <div id="geminiModalBackdrop" class="gemini-modal-backdrop">
+        <div id="geminiModal" class="gemini-modal text-dark-brown">
+            <button id="closeModalBtn" class="absolute top-4 right-5 text-3xl font-bold text-gray-400 hover:text-dark-brown">&times;</button>
+            <div id="geminiContent">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            let currentSlide = 0;
+            const totalSlides = slides.length;
+            // Progress bar removed
+
+            const quizzes = [
+                { id: 1, question: "Which of these is NOT a key significance of Traditional Knowledge?", options: ["Cultural Preservation", "Scientific Contributions", "Short-term Profit", "Sustainable Management"], correctAnswer: 2 },
+                { id: 2, question: "What is the key active compound in turmeric, valued for its healing properties?", options: ["Ibuprofen", "Curcumin", "Caffeine", "Aspirin"], correctAnswer: 1 },
+                { id: 3, question: "TEK is an acronym for:", options: ["Techno-Economic Knowledge", "The Expert Key", "Total Environmental Karma", "Traditional Ecological Knowledge"], correctAnswer: 3 },
+                { id: 4, question: "Ancient Polynesian navigators used knowledge of what to cross vast oceans?", options: ["Sonar Technology", "The Stars and Constellations", "Submarine Currents", "Migratory Birds"], correctAnswer: 1 },
+                { id: 5, question: "What does 'Biopiracy' refer to in the context of Traditional Knowledge?", options: ["Documenting TK for preservation", "Unethical use of TK without permission", "Translating ancient texts about TK", "Sharing TK freely on the internet"], correctAnswer: 1 },
+                { id: 6, question: "True or False: Mainstream institutions have robust systems for including TK.", options: ["True", "False"], correctAnswer: 1 },
+                { id: 7, question: "The Kalyana Karnataka Afforestation initiative is a success story combining government action and what?", options: ["International Corporations", "Foreign Universities", "Traditional Ecological Knowledge", "Modern Agricultural Technology"], correctAnswer: 2 },
+                { id: 8, question: "Which is a key future direction for fostering dialogue around TK?", options: ["Keeping TK secret from outsiders", "Ignoring oral traditions", "Building trust with indigenous communities", "Focusing only on commercial use"], correctAnswer: 2 },
+                { id: 9, question: "A core value of integrating TK is that it fosters innovation that is:", options: ["Exclusively for profit", "Difficult to understand", "Globally relevant and locally grounded", "Independent of cultural ethics"], correctAnswer: 2 },
+                { id: 10, question: "True or False: The main goal of integrating TK is to replace modern science.", options: ["True", "False"], correctAnswer: 1 },
+                { id: 11, question: "What is one major benefit of protecting and documenting Traditional Knowledge?", options: ["Reducing global population", "Preserving cultural heritage for future generations", "Eliminating modern medicine", "Preventing technological advancement"], correctAnswer: 1 },
+                { id: 12, question: "Traditional Knowledge is best understood as:", options: ["Outdated and irrelevant information", "A complement to modern scientific approaches", "A replacement for all modern science", "Only useful for ancient civilizations"], correctAnswer: 1 }
+            ];
+
+            // Progress bar function removed
+
+            function setupQuiz(quizData) {
+                const questionEl = document.getElementById(`quiz-question-${quizData.id}`);
+                const optionsEl = document.getElementById(`quiz-options-${quizData.id}`);
+                const feedbackEl = document.getElementById(`quiz-feedback-${quizData.id}`);
+
+                if (!questionEl || !optionsEl || !feedbackEl) return;
+
+                questionEl.textContent = quizData.question;
+                optionsEl.innerHTML = ''; 
+
+                quizData.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    const label = String.fromCharCode(97 + index);
+                    button.innerHTML = `<b>${label})</b> ${option}`;
+                    button.classList.add('quiz-option', 'p-4', 'rounded-lg', 'text-lg', 'font-bold');
+                    
+                    if (quizData.options.length === 2) {
+                       button.classList.add('text-2xl', 'py-6');
+                    }
+                    if (quizData.options.length === 1) {
+                         optionsEl.classList.remove('grid-cols-2');
+                         optionsEl.classList.add('grid-cols-1');
+                    }
+                    
+                    button.dataset.index = index;
+                    optionsEl.appendChild(button);
+
+                    button.addEventListener('click', () => {
+                        const selectedIndex = parseInt(button.dataset.index);
+                        const isCorrect = selectedIndex === quizData.correctAnswer;
+
+                        optionsEl.querySelectorAll('button').forEach(btn => {
+                            btn.disabled = true;
+                        });
+                        
+                        const isDarkSlide = ['quiz-3', 'quiz-5', 'quiz-6', 'quiz-7', 'quiz-8', 'quiz-9', 'quiz-10', 'quiz-11', 'quiz-12'].includes(optionsEl.parentElement.parentElement.id);
+
+                        if (isCorrect) {
+                            button.classList.add('correct');
+                            feedbackEl.textContent = '✅ Correct! Well done!';
+                            feedbackEl.style.color = isDarkSlide ? '#a7f3d0' :'#588157';
+                        } else {
+                            button.classList.add('incorrect');
+                            optionsEl.querySelector(`[data-index='${quizData.correctAnswer}']`).classList.add('correct');
+                            feedbackEl.textContent = '❌ Not quite! Try to remember this.';
+                            feedbackEl.style.color = isDarkSlide ? '#fecaca' : '#A26746';
+                        }
+                    });
+                });
+            }
+
+            quizzes.forEach(setupQuiz);
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    const isActive = i === index;
+                    slide.classList.toggle('active', isActive);
+
+                    if (isActive) {
+                        const animatedElements = slide.querySelectorAll('[data-animate]');
+                        animatedElements.forEach((el, delayIndex) => {
+                            const animationType = el.dataset.animation || 'fade-in-up';
+                            el.classList.remove('fade-in-up', 'slide-in-left', 'slide-in-right', 'zoom-in');
+                            void el.offsetWidth; 
+                            el.style.animationDelay = `${delayIndex * 150}ms`;
+                            el.classList.add(animationType);
+                        });
+                    }
+                });
+                // Progress update removed
+            }
+
+            function navigateNext() {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            }
+            
+            function navigatePrev() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            }
+
+            // Mouse click navigation
+            document.addEventListener('click', (e) => {
+                // Prevent slide navigation if a button or the modal itself is clicked
+                if (e.target.closest('button, .gemini-modal, .quiz-option')) {
+                    return;
+                }
+                
+                // Navigate based on which half of the screen is clicked
+                if (e.clientX > window.innerWidth / 2) {
+                    navigateNext();
+                } else {
+                    navigatePrev();
+                }
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    e.preventDefault();
+                    navigateNext();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    navigatePrev();
+                } else if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+
+            // Touch navigation for mobile
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+
+            document.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+
+            function handleSwipe() {
+                if (touchEndX < touchStartX - 50) {
+                    navigateNext();
+                }
+                if (touchEndX > touchStartX + 50) {
+                    navigatePrev();
+                }
+            }
+
+            
+
+            // Gemini API Integration
+            const modalBackdrop = document.getElementById('geminiModalBackdrop');
+            const geminiContent = document.getElementById('geminiContent');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const factBtn = document.getElementById('factBtn');
+
+            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=YOUR_API_KEY`; // IMPORTANT: Replace with your actual API Key
+
+            function showModal() { if (modalBackdrop) { modalBackdrop.style.display = 'flex'; } }
+            function closeModal() { if (modalBackdrop) { modalBackdrop.style.display = 'none'; } }
+
+            async function callGemini(prompt) {
+                showModal();
+                geminiContent.innerHTML = '<div class="flex justify-center items-center h-full"><div class="loader"></div></div>';
+
+                // Basic retry mechanism for network issues
+                let response;
+                let delay = 1000;
+                for (let i = 0; i < 5; i++) {
+                    try {
+                        const payload = { contents: [{ parts: [{ text: prompt }] }] };
+                        response = await fetch(API_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (response.ok) break;
+                    } catch (error) { /* ignore and retry */ }
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+
+                if (!response || !response.ok) {
+                    console.error("Gemini API call failed.");
+                    geminiContent.innerHTML = `<p class="text-red-600">Sorry, there was an issue connecting to the service. Please try again later.</p>`;
+                    return;
+                }
+                
+                try {
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (text) {
+                        geminiContent.innerHTML = `<p class="text-xl leading-relaxed">${text.replace(/\n/g, '<br>')}</p>`;
+                    } else { throw new Error("No content found in API response."); }
+                } catch (error) {
+                    console.error("Error processing Gemini response:", error);
+                    geminiContent.innerHTML = `<p class="text-red-600">Sorry, an unexpected error occurred.</p>`;
+                }
+            }
+
+            if (factBtn) {
+                factBtn.addEventListener('click', () => callGemini("Tell me a surprising scientific fact about turmeric or curcumin. Keep it to one short, engaging paragraph."));
+            }
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', closeModal);
+            }
+            if (modalBackdrop) {
+                modalBackdrop.addEventListener('click', (e) => { if (e.target === modalBackdrop) closeModal(); });
+            }
+            
+            // Initial slide load
+            showSlide(currentSlide);
+            // Initial progress removed
+        });
+    </script>
+
+</body>
+</html>

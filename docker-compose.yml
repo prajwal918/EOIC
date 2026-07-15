@@ -1,8 +1,19 @@
 version: '3.8'
+
 services:
-  app:
-    build: .
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: eoic-presentation:latest
+    container_name: eoic_web
     ports:
       - "8080:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     volumes:
-      - .:/app
+      - ./src:/usr/share/nginx/html:ro

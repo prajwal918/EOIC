@@ -4,6 +4,7 @@ FROM nginx:1.25-alpine
 LABEL org.opencontainers.image.source="https://github.com/eoic/eoic"
 LABEL org.opencontainers.image.description="EOIC Presentation Web Container"
 LABEL maintainer="EOIC Core Team"
+LABEL security.hardened="true"
 
 # Clear out default nginx content
 RUN rm -rf /usr/share/nginx/html/*
